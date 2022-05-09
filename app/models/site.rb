@@ -5,7 +5,7 @@ class Site
   field :name, type: String
   field :url, type: String
 
-  embeds_many :listens
+  has_many :listen
 
   validates_presence_of :name, :url
 end

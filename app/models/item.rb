@@ -10,7 +10,7 @@ class Item
 
   validate :locator_included
   def locator_included
-    errors.add(:item, 'Deve ser ...') unless ["css", "xpath"].include? locator
+    errors.add(:item, 'Locator deve ser: css ou xpath ') unless ["css", "xpath"].include? locator
   end
 
   validates_presence_of :locator

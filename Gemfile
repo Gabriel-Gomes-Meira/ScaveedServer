@@ -42,6 +42,9 @@ gem "bootsnap", require: false
 # Integração com o MongoDB
 gem 'mongoid' #, '~> 7.0.5'
 
+# Cors Resolverdor:
+gem 'rack-cors'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
