@@ -22,7 +22,7 @@ class ListensController < ApplicationController
 
   def update
     listen = Listen.find(params[:id])
-    listen.update_attributes!()
+    listen.update_attributes!(listen_params)
     render json: listen
   end
 
@@ -37,7 +37,7 @@ class ListensController < ApplicationController
 
   private
   def item_params
-    params.require(:item).permit(:locator, :indentifier)
+    params.require(:item).permit(:indentifier)
   end
 
 end

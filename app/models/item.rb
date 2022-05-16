@@ -3,17 +3,17 @@ class Item
   include Mongoid::Timestamps
 
   # field :for_search, type: Boolean
-  field :locator, type: String
+  # field :locator, type: String
   field :indentifier, type: String
 
   embedded_in :listen
 
-  validate :locator_included
-  def locator_included
-    errors.add(:item, 'Locator deve ser: css ou xpath ') unless ["css", "xpath"].include? locator
-  end
+  # validate :locator_included
+  # def locator_included
+  #   errors.add(:item, 'Locator deve ser: css ou xpath ') unless ["css", "xpath"].include? locator
+  # end
 
-  validates_presence_of :locator
+  validates_presence_of :indentifier
 end
 
 # site (ora, o site que devo scrapar)

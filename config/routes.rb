@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :sites, only: [:create, :index, :update, :destroy]
   resources :listens, only: [:create, :index, :update, :destroy]
-  resources :itens, only: [:index, :destroy]
+  # resources :itens, only: [:index, :destroy]
+  resources :notification_model, only: [:create, :index, :update, :destroy]
    # [:create, :index, :update, :destroy]
 end

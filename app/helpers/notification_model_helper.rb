@@ -1,0 +1,2 @@
+module NotificationModelHelper
+end
