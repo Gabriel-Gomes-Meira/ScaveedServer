@@ -32,7 +32,7 @@ class NotificationModelController < ApplicationController
   end
 
   def destroy
-    NotificationModel.destroy_all(params[:id])
+    NotificationModel.destroy_all({:_id => params[:id]})
   end
 
   # private
