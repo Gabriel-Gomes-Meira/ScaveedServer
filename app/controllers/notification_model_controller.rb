@@ -28,17 +28,26 @@ class NotificationModelController < ApplicationController
   end
 
   def update
+    nm = NotificationModel.find(params[:id])
 
+    for item in params_itens[:wanted_items] do
+      wi = WantedItem.new(item)
+      wi.notification_model = nm
+      unless !wi.save
+        return render json: wi.errors, status: :unprocessable_entity
+      end
+    end
+
+    if nm.update_attributes(params_message)
+      render json: nm, status: :ok
+    else
+      render json: nm.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
     NotificationModel.destroy_all({:_id => params[:id]})
   end
-
-  # private
-  # def listen_param
-  #   params.require(:listen).permit(:id)
-  # end
 
   private
   def params_message
