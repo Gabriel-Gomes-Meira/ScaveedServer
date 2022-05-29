@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   # resources :itens, only: [:index, :destroy]
   resources :notification_model, only: [:create, :index, :update, :destroy]
   resources :wanted_items, only: [:index, :update, :destroy]
+  resources :task, only: [:create, :destroy]
   # [:create, :index, :update, :destroy]
+  #
 end
