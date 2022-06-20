@@ -25,15 +25,3 @@ class NotificationModel
     end
   end
 end
-
-# {
-#   "wanted_itens":[
-#     "pre_text":""
-#     "url":""
-#     "distinguer":{}
-#     "indentifier":""
-#     "recursive_path":[]
-#     "wanted_value":""
-#     ],
-#     "remain_message":""
-# }

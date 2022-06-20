@@ -15,7 +15,6 @@ class NotificationModelController < ApplicationController
     end
 
     if nm.save()
-      listen.save
       return render json: nm, status: :created
     else
       return render json: nm.errors, status: :unprocessable_entity
@@ -25,8 +24,6 @@ class NotificationModelController < ApplicationController
   def update
     nm = NotificationModel.find(:_id => params[:id])
     for i in params_itens[:wanted_items] do
-      # return render json: nm.wi_update_or_create(i), status: :ok
-      # return render json: nm.wi_update_or_create(i), status: :ok
       raise ActiveModel::AssociationNotFoundError if nm.wi_update_or_create(i).nil?
     end
 
@@ -53,6 +50,6 @@ class NotificationModelController < ApplicationController
   private
   def params_itens
     params.require(:model).permit(wanted_items: [:id, :var_name, :url, :wanted_value,
-                                                 :indentifier, recursive_path: [], distinguer: [:is_last]])
+                                                 :path, distinguer: [:is_last]])
   end
 end
