@@ -4,6 +4,7 @@ class NotificationModelController < ApplicationController
   end
 
   def create
+    # return render json:params[:model][:wanted_items], status: :bad_request
     nm = NotificationModel.new(params_message)
     listen = Listen.find(params[:listen][:id])
     nm.listen = listen
