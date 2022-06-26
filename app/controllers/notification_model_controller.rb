@@ -25,11 +25,16 @@ class NotificationModelController < ApplicationController
   def update
     nm = NotificationModel.find(:_id => params[:id])
     for i in params_itens[:wanted_items] do
-      raise ActiveModel::AssociationNotFoundError if nm.wi_update_or_create(i).nil?
+      # raise ActiveModel::AssociationNotFoundError if nm.wi_update_or_create(i).nil?
+      raise ActiveModel::AssociationNotFoundError if !nm.wi_update_or_create(i)
     end
 
     if params[:model][:message]
       nm.update_attributes(params_message)
+    end
+
+    for i in params_descarted[:descarted_items] do
+      nm.wi_delete(i)
     end
 
     if nm.save()
@@ -50,7 +55,12 @@ class NotificationModelController < ApplicationController
 
   private
   def params_itens
-    params.require(:model).permit(wanted_items: [:id, :var_name, :url, :wanted_value,
+    params.require(:model).permit(wanted_items: [ :var_name, :url, :wanted_value,
                                                  :path, distinguer: [:is_last]])
+  end
+
+  private
+  def params_descarted
+    params.require(:model).permit(descarted_items:[])
   end
 end
