@@ -1,9 +1,7 @@
 class TaskController < ApplicationController
   def index
-    model_tasks = Task.with(collection:"model_task") do |mt|
-      mt.all
-    end
-    render json: model_tasks, status: :ok
+    model_tasks = ModelTask.all
+    return render json: model_tasks, status: :ok
   end
   
   def all_queued
@@ -14,9 +12,9 @@ class TaskController < ApplicationController
   def create
 
     # return render json: ENV['tasks_scripts_path'], status: :ok
-    task = Task.new(params_task)
     listen = param_listen
     if listen.nil?
+      task = Task.new(params_task)
       if task.save
         render json:task, status: :created
       else
@@ -24,25 +22,32 @@ class TaskController < ApplicationController
                       status: :unprocessable_entity
       end
     else
-      task.with(collection:"model_task") do |mt|
-        if mt.save()
-          render json: [listen,mt], status: :created
-        else
-          render json: {"Task_Errors":task.errors,
-                        "Listen_Errors":listen.errors},
-                 status: :unprocessable_entity
-        end
+      model_task = ModelTask.new(params_task)
+      model_task.listen = listen
+      if model_task.save()
+        render json: [listen,model_task], status: :created
+      else
+        render json: {"Task_Errors":model_task.errors},
+               status: :unprocessable_entity
       end
     end
   end
 
-  def destroy
-
-
-    doc = Task.with(collection: "model_task") do |mt|
-      mt.find_by(:_id => {:oid => params[:id]})
+  def update
+    model_task = ModelTask.find(params[:id])
+    model_task.update_attributes(params_task)
+    model_task.listen = param_listen
+    if model_task.save()
+      render json: [model_task], status: :ok
+    else
+      render json: {"Task_Errors":model_task.errors},
+             status: :unprocessable_entity
     end
-    render json: doc
+  end
+
+  def destroy
+    qtdd = ModelTask.destroy_all({:_id => params[:id]})
+    render json:{:message => "Were deleteds #{qtdd} documents!"}, status: :ok
     # render json:{:message => "Were deleteds #{qtdd} documents!"}, status: :ok
     # Task.remove_from_queue(id)
     # Mongoid::Errors::DocumentNotFound, tratamento deve ser aplicado
