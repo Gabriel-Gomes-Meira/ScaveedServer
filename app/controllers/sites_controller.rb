@@ -1,6 +1,7 @@
 class SitesController < ApplicationController
   def index
-    render json: Site.all
+    # render json: Site.all
+    render json: Site.collection.find({})
   end
 
   def create

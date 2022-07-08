@@ -2,6 +2,13 @@ class NotificationModel
   include Mongoid::Document
   include Mongoid::Timestamps
   field :message, type: String
+  field :listen_name, type: String, default: -> {
+    begin
+      Listen.find(self[:listen]).name
+    rescue Mongoid::Errors::DocumentNotFound
+      ""
+    end
+  }
   belongs_to :listen
   embeds_many :wanted_items
   accepts_nested_attributes_for :wanted_items

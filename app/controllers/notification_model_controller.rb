@@ -5,8 +5,8 @@ class NotificationModelController < ApplicationController
 
   def create
     # return render json:params[:model][:wanted_items], status: :bad_request
-    nm = NotificationModel.new(params_message)
-    listen = Listen.find(params[:listen][:id])
+    nm = NotificationModel.new(params_model)
+    listen = Listen.find(params[:model][:listen_id]) ##fix to handle
     nm.listen = listen
     for item in params_itens[:wanted_items] do
       # return render json:nm.wi_update_or_create(item),status: :temporary_redirect
@@ -24,13 +24,10 @@ class NotificationModelController < ApplicationController
 
   def update
     nm = NotificationModel.find(:_id => params[:id])
+    nm.update_attributes!(params_model) ##fix handle error
     for i in params_itens[:wanted_items] do
       # raise ActiveModel::AssociationNotFoundError if nm.wi_update_or_create(i).nil?
       raise ActiveModel::AssociationNotFoundError if !nm.wi_update_or_create(i)
-    end
-
-    if params[:model][:message]
-      nm.update_attributes(params_message)
     end
 
     for i in params_descarted[:descarted_items] do
@@ -49,8 +46,8 @@ class NotificationModelController < ApplicationController
   end
 
   private
-  def params_message
-    params.require(:model).permit(:message)
+  def params_model
+    params.require(:model).permit(:message, :listen_id)
   end
 
   private

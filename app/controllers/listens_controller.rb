@@ -6,17 +6,10 @@ class ListensController < ApplicationController
   def create
     listen = Listen.new(listen_params)
     listen.site = Site.find(params[:site][:id])
-    item = Item.new(item_params)
-    item.listen = listen
-    if item.save
-      listen.item = item
-      if listen.save
-        render json: listen, status: :created
-      else
-        render json: listen.errors, status: :unprocessable_entity
-      end
+    if listen.save
+      render json: listen, status: :created
     else
-      render json: item.errors, status: :unprocessable_entity
+      render json: listen.errors, status: :unprocessable_entity
     end
   end
 
@@ -32,12 +25,6 @@ class ListensController < ApplicationController
 
   private
   def listen_params
-    params.require(:listen).permit(:name, :url)
+    params.require(:listen).permit(:name, :url, :element_indentifier, :site_id)
   end
-
-  private
-  def item_params
-    params.require(:item).permit(:indentifier)
-  end
-
 end
