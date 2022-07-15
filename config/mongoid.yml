@@ -3,6 +3,6 @@ development:
   clients:
     # Defines the default client. (required)
     default:
-      uri: mongodb+srv://api_customer:ap1cust0m3r@culonimbusdevelopment.kvkk3.mongodb.net/mining_net_dev?retryWrites=true&w=majority
-      options:
-        server_selection_timeout: 5
+      database: mining_net_development
+      hosts:
+        - localhost:27017

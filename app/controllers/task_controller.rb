@@ -8,6 +8,11 @@ class TaskController < ApplicationController
     tasks = Task.order_by updated_at: :asc
     render json: tasks, status: :ok
   end
+
+  def history_tasks
+    ##TODO
+    ##https://www.mongodb.com/docs/mongoid/current/reference/persistence-configuration/#client-and-collection-access
+  end
   
   def create
 
@@ -33,6 +38,20 @@ class TaskController < ApplicationController
     end
   end
 
+  def add_queue
+    model_task = ModelTask.find(params[:id])
+    task = Task.new({
+                      :content => model_task.content,
+                      :file_name => model_task.file_name,
+                    })
+    if task.save
+      render json:task, status: :created
+    else
+      return render json: task.errors,
+                    status: :unprocessable_entity
+    end
+  end
+
   def update
     model_task = ModelTask.find(params[:id])
     model_task.update_attributes(params_task)
@@ -42,6 +61,16 @@ class TaskController < ApplicationController
     else
       render json: {"Task_Errors":model_task.errors},
              status: :unprocessable_entity
+    end
+  end
+
+  def fix_queue
+    task = Task.find(params[:id])
+    if task.update_attributes(params_task)
+      task.save
+      render json: task, status: :ok
+    else
+      render json: task.errors, status: :unprocessable_entity
     end
   end
 

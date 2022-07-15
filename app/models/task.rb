@@ -6,6 +6,4 @@ class Task
   field :content, type: Array
   field :file_name, type:String
   field :state, type:Integer, default: 0
-
-
 end
