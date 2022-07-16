@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   post '/queued_tasks/:id', to: "task#add_queue"
   put '/queued_tasks/:id', to: "task#fix_queue"
   get '/tasks/history', to: "task#history_tasks"
-  ##TODO
-  get '/reports/', to: "" ##https://www.mongodb.com/docs/mongoid/current/reference/persistence-configuration/#client-and-collection-access
+  
+  get '/reports/', to: "reports#index"
   # [:create, :index, :update, :destroy]
 
 end

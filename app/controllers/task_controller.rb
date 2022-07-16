@@ -10,8 +10,8 @@ class TaskController < ApplicationController
   end
 
   def history_tasks
-    ##TODO
-    ##https://www.mongodb.com/docs/mongoid/current/reference/persistence-configuration/#client-and-collection-access
+    client = Task.mongo_client.with()
+    render json: client[:tasks_log].find({}).sort(updated_at:-1), status: :ok
   end
   
   def create
@@ -66,7 +66,8 @@ class TaskController < ApplicationController
 
   def fix_queue
     task = Task.find(params[:id])
-    if task.update_attributes(params_task)
+
+    if task.update_attributes(params_task) && task[:state] == 0
       task.save
       render json: task, status: :ok
     else
