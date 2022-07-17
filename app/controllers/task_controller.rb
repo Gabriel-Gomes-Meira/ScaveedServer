@@ -5,8 +5,8 @@ class TaskController < ApplicationController
   end
   
   def all_queued
-    tasks = Task.order_by updated_at: :asc
-    render json: tasks, status: :ok
+    client = Task.mongo_client.with()
+    render json: client[:queued_tasks].find({}).sort(updated_at:1), status: :ok
   end
 
   def history_tasks

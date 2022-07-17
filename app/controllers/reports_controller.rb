@@ -6,14 +6,13 @@ class ReportsController < ApplicationController
   end
 
   def clean
-    client = Listen.mongo_client.with(collection:"reports")
+    client = Listen.mongo_client.with()
     
-    report = client[:reports].find(:_id == params[:id]).first
+    report = client[:reports].find(:_id  => BSON::ObjectId(params[:id])).first
     count = report[:registers].length
-    client[:reports].find_one_and_update(:_id == params[:id],
-                                         "$set" => {
-                                           :registers => []
-                                         })
+    client[:reports].update_one({:_id => BSON::ObjectId(params[:id])}, "$set" => {
+                                                                      :registers => []
+                                                                    })
 
 
     render json: {:response =>
