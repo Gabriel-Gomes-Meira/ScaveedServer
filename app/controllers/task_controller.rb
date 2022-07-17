@@ -29,6 +29,7 @@ class TaskController < ApplicationController
     else
       model_task = ModelTask.new(params_task)
       model_task.listen = listen
+      model_task.listen_name = listen.name
       if model_task.save()
         render json: [listen,model_task], status: :created
       else
@@ -56,6 +57,7 @@ class TaskController < ApplicationController
     model_task = ModelTask.find(params[:id])
     model_task.update_attributes(params_task)
     model_task.listen = param_listen
+    model_task.listen_name = model_task.listen.name
     if model_task.save()
       render json: [model_task], status: :ok
     else
@@ -71,7 +73,7 @@ class TaskController < ApplicationController
       task.save
       render json: task, status: :ok
     else
-      render json: task.errors, status: :unprocessable_entity
+      render json: [task.errors, task[:state] == 0] , status: :unprocessable_entity
     end
   end
 

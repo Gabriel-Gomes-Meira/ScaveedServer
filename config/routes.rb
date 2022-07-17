@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/tasks/history', to: "task#history_tasks"
   
   get '/reports/', to: "reports#index"
+  delete '/reports/clean/:id', to: "reports#clean"
   # [:create, :index, :update, :destroy]
 
 end
