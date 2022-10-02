@@ -1,0 +1,44 @@
+site
+    name
+    url
+
+listen
+    name
+    element_indentifier
+    site_id
+    notification_model_id
+    model_task_id
+
+notification_model
+    message
+
+item
+    notification_model_id
+    url
+    var_name
+    distinguer
+    path
+    wanted_value
+
+queued_task
+    content
+    file_name
+    state
+
+model_task
+    content
+    file_name
+    listen_id
+
+user
+    telegram_token
+    telegram_chatid
+
+report
+    fromId
+    current_state
+    at
+
+log
+    message_log
+    at

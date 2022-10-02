@@ -16,9 +16,7 @@ Rails.application.routes.draw do
   post '/queued_tasks/:id', to: "task#add_queue"
   put '/queued_tasks/:id', to: "task#fix_queue"
   get '/tasks/history', to: "task#history_tasks"
-  
+
   get '/reports/', to: "reports#index"
   delete '/reports/clean/:id', to: "reports#clean"
-  # [:create, :index, :update, :destroy]
-
 end
