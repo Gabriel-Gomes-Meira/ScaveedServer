@@ -27,12 +27,21 @@ queued_task
     count_erro
     updated_at
     initialized_at
-    terminated_at
     
 model_task
     content
     file_name
     listen_id
+    
+log_task
+    content
+    file_name
+    state
+    count_erro
+    initialized_at
+    terminated_at
+    log
+    updated_at
  
 user
     telegram_token
