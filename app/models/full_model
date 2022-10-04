@@ -24,12 +24,14 @@ queued_task
     content
     file_name
     state
-
+    count_erro
+    updated_at
+    
 model_task
     content
     file_name
     listen_id
-
+ 
 user
     telegram_token
     telegram_chatid
