@@ -23,7 +23,7 @@ item
 queued_task
     content
     file_name
-    state
+    state, default: 0
     count_erro, default: 0
     log
     updated_at
@@ -31,14 +31,13 @@ queued_task
     
 model_task
     content
-    file_name
-    listen_id
+    file_name    
     
 log_task
     content
     file_name
-    state
-    count_erro
+    state, default: 0
+    count_erro, default: 0
     initialized_at
     terminated_at
     log
