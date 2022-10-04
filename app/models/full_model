@@ -25,6 +25,7 @@ queued_task
     file_name
     state
     count_erro
+    log
     updated_at
     initialized_at
     
