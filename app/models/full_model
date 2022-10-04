@@ -26,6 +26,8 @@ queued_task
     state
     count_erro
     updated_at
+    initialized_at
+    terminated_at
     
 model_task
     content
