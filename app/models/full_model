@@ -24,7 +24,7 @@ queued_task
     content
     file_name
     state
-    count_erro
+    count_erro, default: 0
     log
     updated_at
     initialized_at
