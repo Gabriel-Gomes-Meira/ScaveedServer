@@ -48,7 +48,7 @@ user
     telegram_chatid
 
 report
-    fromId
+    listen_id
     current_state
     at
 

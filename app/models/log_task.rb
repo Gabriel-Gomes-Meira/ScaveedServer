@@ -1,0 +1,2 @@
+class LogTask < ApplicationRecord
+end

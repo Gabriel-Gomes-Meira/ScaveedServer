@@ -1,10 +1,13 @@
 class CreateQueuedTasks < ActiveRecord::Migration[7.0]
   def change
     create_table :queued_tasks do |t|
-      t.string :content
-      t.string :file_name
-      t.integer :state
-      t.timestamps
+      t.text :content, null: false
+      t.string :file_name, null: false
+      t.integer :state, default: 0
+      t.text :log
+      t.integer :count_erro, default: 0      
+      t.datetime :initialized_at
+      t.datetime :updated_at
     end
   end
 end
