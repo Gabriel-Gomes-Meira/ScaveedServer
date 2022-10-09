@@ -5,6 +5,7 @@ site
 listen
     name
     element_indentifier
+    url
     site_id
     notification_model_id
     model_task_id
@@ -16,7 +17,7 @@ item
     notification_model_id
     url
     var_name
-    distinguer
+    islast
     path
     wanted_value
 

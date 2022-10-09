@@ -20,7 +20,7 @@ class ListensController < ApplicationController
   end
 
   def destroy
-    Listen.destroy_all({:id => params[:id]})
+    Listen.destroy(params[:id])
   end
 
   private

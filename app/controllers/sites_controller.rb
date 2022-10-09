@@ -23,7 +23,7 @@ class SitesController < ApplicationController
   end
 
   def destroy
-    Site.destroy_all({:id => params[:id]})
+    Site.destroy(params[:id])
   end
 
   private

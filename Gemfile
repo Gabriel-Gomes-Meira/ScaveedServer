@@ -10,6 +10,7 @@ gem "rails", "~> 7.0.2", ">= 7.0.2.4"
 gem "sprockets-rails"
 
 gem "sqlite3"
+gem 'rack-cors'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
