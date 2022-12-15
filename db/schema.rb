@@ -11,13 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "items", force: :cascade do |t|
     t.string "url", null: false
     t.string "var_name", null: false
     t.boolean "islast", default: false
     t.string "path", null: false
     t.string "wanted_value", null: false
-    t.integer "notification_model_id", null: false
+    t.bigint "notification_model_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["notification_model_id"], name: "index_items_on_notification_model_id"
@@ -27,9 +30,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
     t.string "name", null: false
     t.text "url", null: false
     t.string "element_indentifier", null: false
-    t.integer "site_id", null: false
-    t.integer "notification_model_id"
-    t.integer "model_task_id"
+    t.bigint "site_id", null: false
+    t.bigint "notification_model_id"
+    t.bigint "model_task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["model_task_id"], name: "index_listens_on_model_task_id"
@@ -78,7 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
 
   create_table "reports", force: :cascade do |t|
     t.text "current_state", null: false
-    t.integer "listen_id", null: false
+    t.bigint "listen_id", null: false
     t.datetime "at", null: false
     t.index ["listen_id"], name: "index_reports_on_listen_id"
   end

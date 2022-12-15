@@ -81,8 +81,7 @@ class TasksController < ApplicationController
     qtdd = ModelTask.destroy(params[:id])
     render json:{:message => "Were deleteds #{qtdd} documents!"}, status: :ok
     # render json:{:message => "Were deleteds #{qtdd} documents!"}, status: :ok
-    # Task.remove_from_queue(id)
-    # Mongoid::Errors::DocumentNotFound, tratamento deve ser aplicado
+    # Task.remove_from_queue(id)    
   end
 
   def dequeue

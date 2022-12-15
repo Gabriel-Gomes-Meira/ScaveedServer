@@ -1,2 +1,0 @@
-class ItensController < ApplicationController
-end

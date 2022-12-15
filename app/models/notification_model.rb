@@ -7,10 +7,9 @@ class NotificationModel < ApplicationRecord
     wi.notification_model_id = self.id
     puts self.id
     while true
-      begin
-        return wi.save()
-      rescue SQLite3::BusyException => e
-      end
+      
+      return wi.save()
+      
     end
   end
 

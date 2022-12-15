@@ -9,7 +9,7 @@ gem "rails", "~> 7.0.2", ">= 7.0.2.4"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-gem "sqlite3"
+gem "pg"
 gem 'rack-cors'
 
 # Use the Puma web server [https://github.com/puma/puma]
