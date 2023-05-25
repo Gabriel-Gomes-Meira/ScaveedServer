@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # Defines the root path route ("/")  
   resources :sites, only: [:create, :index, :update, :destroy]
-  resources :listens, only: [:create, :index, :update, :destroy]
-  # resources :itens, only: [:index, :destroy]
-  resources :notification_models, only: [:create, :index, :update, :destroy]
-  #resources :wanted_items, only: [:index, :update, :destroy]
+  resources :listens, only: [:create, :index, :update, :destroy]  
+  resources :notification_models, only: [:create, :index, :update, :destroy]  
   resources :tasks, only: [:index, :create, :destroy, :update]
   resources :user, only: [:create, :index, :update, :destroy]
 
@@ -19,4 +16,6 @@ Rails.application.routes.draw do
 
   get '/reports/', to: "reports#index"
   delete '/reports/clean/:id', to: "reports#clean"
+
+  resources :logs, only: [:index]
 end
