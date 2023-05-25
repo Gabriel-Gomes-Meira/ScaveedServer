@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  host: db
+  user: postgres
+  password: password
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: scaveed_development
+
+test:
+  <<: *default
+  database: scaveed_test
+
+production:
+  <<: *default
+  database: scaveed_production

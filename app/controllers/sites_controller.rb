@@ -1,7 +1,6 @@
 class SitesController < ApplicationController
   def index
-    # render json: Site.all
-    render json: Site.collection.find({})
+    render json: Site.all
   end
 
   def create
@@ -16,7 +15,7 @@ class SitesController < ApplicationController
   def update
     site = Site.find(params[:id])
 
-    if site.update_attributes(site_params)
+    if site.update(site_params)     #.update_attributes(site_params)
       render json: site, status: :ok
     else
       render json: site.errors, status: :unprocessable_entity
@@ -24,8 +23,7 @@ class SitesController < ApplicationController
   end
 
   def destroy
-    # Site.destroy_all(params[:id])
-    Site.destroy_all({:_id => params[:id]})
+    Site.destroy(params[:id])
   end
 
   private

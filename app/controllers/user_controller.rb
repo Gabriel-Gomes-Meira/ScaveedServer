@@ -1,5 +1,4 @@
 class UserController < ApplicationController
-
   def index
     render json:User.first, status: :ok
   end
@@ -14,7 +13,8 @@ class UserController < ApplicationController
   end
 
   def update
-    user = User.find({:_id => params[:id]})
+    user = User.find(id: params[:id])
+
     user.update_attributes(params_profile)
     if user.save
       render json: user, status: :ok
@@ -28,6 +28,6 @@ class UserController < ApplicationController
   end
 
   def params_profile
-    params.require(:profile).permit(:telegram => {} )
+    params.require(:user).permit(:telegram_chatid, :telegram_token )
   end
 end

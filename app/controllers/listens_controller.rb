@@ -5,7 +5,7 @@ class ListensController < ApplicationController
 
   def create
     listen = Listen.new(listen_params)
-    listen.site = Site.find(params[:site][:id])
+    
     if listen.save
       render json: listen, status: :created
     else
@@ -15,12 +15,12 @@ class ListensController < ApplicationController
 
   def update
     listen = Listen.find(params[:id])
-    listen.update_attributes!(listen_params)
-    render json: listen
+    listen.update(listen_params)
+    render json: listen 
   end
 
   def destroy
-    Listen.destroy_all({:_id => params[:id]})
+    Listen.destroy(params[:id])
   end
 
   private

@@ -1,8 +1,0 @@
-development:
-  # Configure available database clients. (required)
-  clients:
-    # Defines the default client. (required)
-    default:
-      database: mining_net_development
-      hosts:
-        - localhost:27017

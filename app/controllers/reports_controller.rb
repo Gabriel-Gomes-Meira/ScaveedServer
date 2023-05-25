@@ -1,22 +1,24 @@
 class ReportsController < ApplicationController
   def index
-    client = Listen.mongo_client.with()
-    render json: client[:reports].find({}),
+    resp = []
+    for l in Listen.select("name as listen_name, id")
+      resp.push(l.attributes)
+      resp.last[:registers] = Report.where(listen_id: l.id)
+    end
+    
+    render json: resp,
            status: :ok
   end
 
   def clean
-    client = Listen.mongo_client.with()
-    
-    report = client[:reports].find(:_id  => BSON::ObjectId(params[:id])).first
-    count = report[:registers].length
-    client[:reports].update_one({:_id => BSON::ObjectId(params[:id])}, "$set" => {
-                                                                      :registers => []
-                                                                    })
+
+    reports = Report.where(listen_id: params[:id])
+    count = reports.length
+    reports.destroy_all
 
 
     render json: {:response =>
                     "#{count} relatórios foram deletados nessa operação!"},
-                  status: :ok
+           status: :ok
   end
 end
