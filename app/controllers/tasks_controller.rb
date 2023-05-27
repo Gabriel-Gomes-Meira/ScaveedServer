@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   def index
     return render json: ModelTask.joins(:listen).select('model_tasks.*, listens.name as listen_name'), status: :ok
-    # return render json: ModelTask.all, status: :ok
   end
 
   def all_queued
@@ -9,8 +8,14 @@ class TasksController < ApplicationController
   end
 
   def history_tasks
-
-    render json: LogTask.all, status: :ok
+    logs = LogTask.paginate(page: params[:page], per_page: params[:per_page]).order('terminated_at DESC')
+    render json: {
+      items: logs,
+      pagination: {
+        total_pages: logs.total_pages,
+        total_records: logs.total_entries
+      }
+    }    
   end
 
   def create
@@ -80,8 +85,6 @@ class TasksController < ApplicationController
   def destroy
     qtdd = ModelTask.destroy(params[:id])
     render json:{:message => "Were deleteds #{qtdd} documents!"}, status: :ok
-    # render json:{:message => "Were deleteds #{qtdd} documents!"}, status: :ok
-    # Task.remove_from_queue(id)    
   end
 
   def dequeue
@@ -91,7 +94,7 @@ class TasksController < ApplicationController
 
   private
   def params_task
-    params.require(:task).permit(:file_name, :content)
+    params.require(:task).permit(:file_name, :content, :preset_content)
   end
 
   private
