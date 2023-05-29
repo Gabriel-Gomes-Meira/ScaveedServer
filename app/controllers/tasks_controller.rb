@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    return render json: ModelTask.joins(:listen).select('model_tasks.*, listens.name as listen_name'), status: :ok
+    return render json: ModelTask.joins(:listen).select('model_tasks.*, listens.name as listen_name, listens.id as listen_id'), status: :ok
   end
 
   def all_queued
