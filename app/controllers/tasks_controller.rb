@@ -48,6 +48,7 @@ class TasksController < ApplicationController
     task = QueuedTask.new({
                       :content => model_task.content,
                       :file_name => model_task.file_name,
+                      :preset_content => model_task.preset_content
                     })
     if task.save
       render json:task, status: :created
