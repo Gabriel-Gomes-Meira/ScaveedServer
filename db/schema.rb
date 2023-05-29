@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_29_143629) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_29_185414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,7 +35,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_29_143629) do
     t.bigint "model_task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "model_tasks_id"
     t.index ["model_task_id"], name: "index_listens_on_model_task_id"
+    t.index ["model_tasks_id"], name: "index_listens_on_model_tasks_id"
     t.index ["notification_model_id"], name: "index_listens_on_notification_model_id"
     t.index ["site_id"], name: "index_listens_on_site_id"
   end
@@ -104,4 +106,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_29_143629) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "listens", "model_tasks", column: "model_tasks_id"
 end
