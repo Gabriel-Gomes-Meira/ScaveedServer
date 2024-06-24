@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :notification_models, only: [:create, :index, :update, :destroy]  
   resources :tasks, only: [:index, :create, :destroy, :update]
   resources :user, only: [:create, :index, :update, :destroy]
+  resources :crons, only: [:create, :index, :update, :destroy]
 
   get '/queued_tasks/', to: "tasks#all_queued"
   delete '/queued_tasks/:id', to: "tasks#dequeue"

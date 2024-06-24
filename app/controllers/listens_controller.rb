@@ -25,6 +25,6 @@ class ListensController < ApplicationController
 
   private
   def listen_params
-    params.require(:listen).permit(:name, :url, :element_indentifier, :site_id)
+    params.require(:listen).permit(:name, :url, :element_indentifier, :site_id, :interval)
   end
 end

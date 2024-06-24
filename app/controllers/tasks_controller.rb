@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   def index
-    return render json: ModelTask.joins(:listen).select('model_tasks.*, listens.name as listen_name, listens.id as listen_id'), status: :ok
+    listens_joins = ModelTask.joins(:listen).select('model_tasks.*, listens.name as listen_name, listens.id as listen_id')
+    crons_joins = ModelTask.joins(:cron).select('model_tasks.*, crons.name as cron_name, crons.id as cron_id')
+    return render json: listens_joins+crons_joins, status: :ok
   end
 
   def all_queued
@@ -22,7 +24,8 @@ class TasksController < ApplicationController
 
     # return render json: ENV['tasks_scripts_path'], status: :ok
     listen = param_listen
-    if listen.nil?
+    cron = param_cron_task
+    if listen.nil? && cron.nil?
       task = QueuedTask.new(params_task)
       if task.save
         render json:task, status: :created
@@ -33,9 +36,15 @@ class TasksController < ApplicationController
     else
       model_task = ModelTask.new(params_task)
       if model_task.save()
-        listen.model_task_id = model_task.id
-        listen.save()
-        render json: [listen,model_task], status: :created
+        if cron
+          cron.model_task_id = model_task.id
+          cron.save()
+        end
+        if listen
+          listen.model_task_id = model_task.id
+          listen.save()
+        end
+        render json: [listen,cron,model_task], status: :created
       else
         render json: {"Task_Errors":model_task.errors},
                status: :unprocessable_entity
@@ -62,9 +71,16 @@ class TasksController < ApplicationController
     model_task = ModelTask.find(params[:id])
 
     if model_task.update(params_task)
-      listen = param_listen
-      listen.model_task_id = model_task.id
-      listen.save()
+      if param_listen 
+        listen = param_listen
+        listen.model_task_id = model_task.id
+        listen.save()
+      end
+      if param_cron_task
+        cron = param_cron_task
+        cron.model_task_id = model_task.id
+        cron.save()
+      end
       render json: [model_task], status: :ok
     else
       render json: {"Task_Errors":model_task.errors},
@@ -102,6 +118,15 @@ class TasksController < ApplicationController
   def param_listen
     if params.has_key?(:listen) && params[:listen][:id]
       Listen.find(params[:listen][:id])
+    else
+      nil
+    end
+  end
+
+  private
+  def param_cron_task
+    if params.has_key?(:cron) && params[:cron][:id]
+      Cron.find(params[:cron][:id])
     else
       nil
     end
