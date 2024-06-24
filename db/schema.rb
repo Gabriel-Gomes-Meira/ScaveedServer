@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_23_212623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "crons", force: :cascade do |t|
+    t.string "name"
+    t.string "interval"
+    t.string "next_run"
+    t.bigint "model_task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["model_task_id"], name: "index_crons_on_model_task_id"
+  end
 
   create_table "items", force: :cascade do |t|
     t.string "url", null: false
@@ -29,13 +39,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
   create_table "listens", force: :cascade do |t|
     t.string "name", null: false
     t.text "url", null: false
-    t.string "element_indentifier", null: false
     t.bigint "site_id", null: false
     t.bigint "notification_model_id"
     t.bigint "model_task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "model_tasks_id"
+    t.text "script"
+    t.integer "interval"
+    t.string "next_run"
     t.index ["model_task_id"], name: "index_listens_on_model_task_id"
+    t.index ["model_tasks_id"], name: "index_listens_on_model_tasks_id"
     t.index ["notification_model_id"], name: "index_listens_on_notification_model_id"
     t.index ["site_id"], name: "index_listens_on_site_id"
   end
@@ -49,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
     t.datetime "terminated_at", null: false
     t.text "log"
     t.datetime "updated_at"
+    t.text "preset_content"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -61,6 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
     t.string "file_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "preset_content"
   end
 
   create_table "notification_models", force: :cascade do |t|
@@ -77,6 +93,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
     t.integer "count_erro", default: 0
     t.datetime "initialized_at"
     t.datetime "updated_at"
+    t.text "preset_content"
+    t.text "message_error"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -100,4 +118,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_170407) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "crons", "model_tasks"
+  add_foreign_key "listens", "model_tasks", column: "model_tasks_id"
 end
