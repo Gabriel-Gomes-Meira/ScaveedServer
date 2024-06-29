@@ -28,6 +28,6 @@ class CronsController < ApplicationController
   
     private
     def cron_params
-      params.require(:cron).permit(:name, :interval, :next_run)
+      params.require(:cron).permit(:name, :interval, :next_run, :params)
     end
 end
