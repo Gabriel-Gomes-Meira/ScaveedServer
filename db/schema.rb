@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_23_212623) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_29_194130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_23_212623) do
     t.bigint "model_task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "params"
     t.index ["model_task_id"], name: "index_crons_on_model_task_id"
   end
 
@@ -95,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_23_212623) do
     t.datetime "updated_at"
     t.text "preset_content"
     t.text "message_error"
+    t.text "params"
   end
 
   create_table "reports", force: :cascade do |t|
