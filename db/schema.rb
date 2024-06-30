@@ -40,13 +40,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_29_194130) do
   create_table "listens", force: :cascade do |t|
     t.string "name", null: false
     t.text "url", null: false
+    t.string "element_indentifier", null: false
     t.bigint "site_id", null: false
     t.bigint "notification_model_id"
     t.bigint "model_task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "model_tasks_id"
-    t.text "script"
     t.integer "interval"
     t.string "next_run"
     t.index ["model_task_id"], name: "index_listens_on_model_task_id"
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_29_194130) do
     t.text "log"
     t.datetime "updated_at"
     t.text "preset_content"
+    t.text "params"
   end
 
   create_table "logs", force: :cascade do |t|
